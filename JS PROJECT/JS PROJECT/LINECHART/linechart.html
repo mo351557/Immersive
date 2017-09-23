@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Line Graph</title>
+    <style type="text/css">
+    body {
+  font: 10px sans-serif;
+}
+.x.axis path {
+    display: none;
+}
+.line {
+    fill: none;
+    stroke-width: 3px;
+}
+path {
+	stroke: blue;
+	stroke-width: 3;
+	fill: none;
+}
+
+</style>
+    <link rel="stylesheet" type="text/css" href="stylesheet1.css">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+    <h1 style="text-align:center;">Multi Series Line Graph </h1>
+    <div id="multiline">
+    </div>
+    <script>
+var	margin = {top: 30, right: 40, bottom: 30, left: 50},
+	width = 1000 - margin.left - margin.right,
+	height = 500 - margin.top - margin.bottom;
+
+//var	parseDate = d3.time.format("%d-%b-%y").parse;
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0,width], 0.2,0.2);
+var	y = d3.scale.linear().range([height, 0]);
+
+ var	xAxis = d3.svg.axis().scale(x)
+ 	.orient("bottom");
+
+var	yAxis = d3.svg.axis().scale(y)
+	.orient("left");
+
+var	valueline = d3.svg.line()
+	.x(function(d) { return x(d.Country); })
+	.y(function(d) { return y(d.Fat); });
+
+var	valueline2 = d3.svg.line()
+	.x(function(d) { return x(d.Country); })
+	.y(function(d) { return y(d.Protein); });
+
+  var	valueline3 = d3.svg.line()
+  	.x(function(d) { return x(d.Country); })
+  	.y(function(d) { return y(d.carbohydrates); });
+
+var	svg = d3.select("#multiline")
+	.append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+	.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// Get the data
+d3.json("chart2.json", function(error, data) {
+	data.forEach(function(d) {
+		d.Country = d.Country;
+		d.Fat = +d.Fat;
+		d.Protein = +d.Protein;
+	});
+
+  x.domain(data.map(function(d){
+      return d.Country;
+  }));
+	// Scale the range of the data
+	y.domain([0, d3.max(data, function(d) { return Math.max(d.Fat, d.Protein, d.carbohydrates); })]);
+
+	svg.append("path")		// Add the line1 path.
+		.attr("class", "line")
+    .style("stroke", "red")
+		.attr("d", valueline(data));
+
+	svg.append("path")		// Add the line2 path.
+		.attr("class", "line")
+		.style("stroke", "green")
+		.attr("d", valueline2(data));
+
+    svg.append("path")		// Add the line3 path.
+      .attr("class", "line")
+      .style("stroke", "blue")
+      .attr("d", valueline3(data));
+
+	svg.append("g")			// Add the X Axis
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis);
+
+	svg.append("g")			// Add the Y Axis
+		.attr("class", "y axis")
+		.call(yAxis);*/
+
+	svg.append("text")
+		.attr("transform", "translate(" + (width-70) + "," + y(data[0].Fat) + ")")
+		.attr("dy", "20px")
+		.attr("text-anchor", "start")
+		.style("fill", "red")
+		.text("fat_100gs");
+
+	svg.append("text")
+		.attr("transform", "translate(" + (width-70) + "," + y(data[0].Protein) + ")")
+		.attr("dy", "20px")
+		.attr("text-anchor", "start")
+		.style("fill", "green")
+		.text("proteins_100g");
+
+    svg.append("text")
+      .attr("transform", "translate(" + (width-70) + "," + y(data[0].carbohydrates) + ")")
+      .attr("dy", "20px")
+      .attr("text-anchor", "start")
+      .style("fill", "blue")
+      .text("carbohydrates_100g");*/
+
+});
+
+    </script>
+</body>
+
+</html>

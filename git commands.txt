@@ -1,0 +1,7 @@
+
+1.git init 
+2.git status
+3.git add .
+4.git commit -m (or) -a (or) -am 'first commit'
+5.git remote add origin https://github.com/navinprasadk/test.git
+6.git push -u origin master

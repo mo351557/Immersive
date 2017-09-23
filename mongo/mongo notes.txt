@@ -1,0 +1,17 @@
+mongo - to start
+show dbs - to show dbs
+show collections - to show collections
+use dbname - opens existinng db or creates new one
+db.collectionName.find() - similar to select * table name
+db.createCollection("mydata")
+
+db.clnme.insert({'name':'superman','year':2020})
+db.clname.find().pretty() - to show all 
+ db.clname.find({'name':'superman'}).pretty(); - to search with condition
+ db.clname.find({'name':'superman','year':'2010'}).pretty();
+ db.clname.update({'name':"supername"},{$set:{"year":2017}}) -to update
+db.clname.remove() -to remove
+db.dropDatabase() - to drop the db
+
+ref- for refering one db to another db
+shall command
